@@ -1,0 +1,9 @@
+{% if movie_list %}
+    {% for movie in movie_list %}
+    <li>
+        <a href ="{% url 'myapp:movie_detail' movie.id %}">{{ movie.title }}</a>
+        {{movie.director.name}}
+        {{movie.watch_date}}
+    </li>
+    {% endfor %}
+{% endif %}
