@@ -1,7 +1,12 @@
+{% extends 'todo/base.html' %}
+
+{% block header %}
 <h1>Todo list</h1>
-
 <p><a href="{% url 'create' %}">新規作成</a><p>
+{% endblock header %}
 
+{% block content %}
+<div class="shadow-sm p-3 mb-5 bg-white rounded">
 <table>
     <thead>
         <tr>
@@ -21,4 +26,4 @@
     {% endfor %}
     </tbody>
 </table>
-
+{% endblock content %}

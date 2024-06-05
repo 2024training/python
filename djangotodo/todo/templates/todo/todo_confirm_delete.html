@@ -1,6 +1,13 @@
-<h1>タスクの削除</h1>
+{% extends 'todo/base.html' %}
 
+{% block header %}
+<h1>タスクの削除</h1>
+{% endblock header %}
+
+{% block content %}
+<p>「{{task.title}}」を削除しますか？</p>
 <form action="" method="POST">{% csrf_token %}
-    <p>{{task}}</p>
-    <input type="submit" value="delete">
+    <a class="btn btn-outline-secondary" href="{% url 'list' %}" role="button">戻る</a>
+    <input class="btn btn-danger" type="submit" value="削除">
 </form>
+{% endblock content %}
