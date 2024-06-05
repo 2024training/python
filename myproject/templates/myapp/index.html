@@ -1,9 +1,25 @@
-{% if movie_list %}
-    {% for movie in movie_list %}
-    <li>
-        <a href ="{% url 'myapp:movie_detail' movie.id %}">{{ movie.title }}</a>
-        {{movie.director.name}}
-        {{movie.watch_date}}
-    </li>
-    {% endfor %}
-{% endif %}
+{% extends './base.html' %}
+{% block content %}
+
+<h1>movie record</h1>
+
+<table>
+        <br><a href="{% url 'myapp:registerdirector' %}">監督を追加</a><br>
+        <br><a href="{% url 'myapp:registermovie' %}">映画を追加</a></br>
+        <br><a href="{% url 'myapp:writinglog' %}">感想を追加</a></br>
+</table>
+
+<table  class='table table-striped table-hover'>
+
+    {% if movie_list %}
+        {% for movie in movie_list %}
+            <tr>
+                <td><a href ="{% url 'myapp:movie_detail' movie.id %}">{{ movie.title }}</a></td>
+                <td>{{movie.director.name}}</td>
+                <td>{{movie.watch_date}}</td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+</table>
+{% endblock %}
+

@@ -7,3 +7,19 @@
 <li>{{log.text}}</li>
 {% endfor %}
 </ul>
+
+{% for log in movie.log.all %}
+    <li>
+        <button onclick="location.href='{% url 'myapp:updatelog' log.id %}'">編集</button>
+        <button onclick="location.href='{% url 'myapp:deletelog' log.id %}'">削除</button>
+        {{ log.text }}
+    </li>
+
+
+
+<a href="{% url 'myapp:writingthismovielog' movie.id %}">Write log of this movie data</a><br>
+<a href="{% url 'myapp:deletemovie' movie.id %}">Delete this movie data</a><br>
+
+{% endfor %}
+
+<a href="{% url 'myapp:index' %}">To Index</a><br>
