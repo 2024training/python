@@ -29,5 +29,5 @@ urlpatterns = [
     
     # ログイン
     path('admin/', admin.site.urls),
-    path('', include('app.urls')), 
+    path('login_app/', include('login_app.urls'))
 ]
