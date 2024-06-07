@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import SignupForm, LoginForm
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 
 # Create your views here.
 def signup_view(request):
@@ -27,7 +27,9 @@ def login_view(request):
             
             if user:
                 login(request, user)
+                return redirect('http://localhost:8000/todo/todo/')
                 # ログイン成功後のリダイレクト処理などを追加することが適切です。
+                
 
     else:
         form = LoginForm()
@@ -39,7 +41,9 @@ def login_view(request):
     return render(request, 'login_app/login.html', param)
 
 def logout_view(request):
-    pass
+    logout(request)
+    
+    return render(request, 'login_app/logout.html')
 
 def user_view(request):
     pass
