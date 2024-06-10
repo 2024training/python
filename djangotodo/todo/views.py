@@ -22,20 +22,28 @@ class TodoDetail(DetailView):
 class TodoCreate(LoginRequiredMixin, CreateView):
     model = Todo
     fields = ['title', 'description', 'deadline']
-    success_url = reverse_lazy('list')  # 作成後にリダイレクトするURL
+    success_url = reverse_lazy('list')
+    template_name = 'todo/todo_form.html'
 
     def form_valid(self, form):
-        form.instance.user = self.request.user  # ログインユーザーを指定
+        form.instance.user = self.request.user
         return super().form_valid(form)
 
-    def form_invalid(self, form):
-        # バリデーションエラーがある場合にフォームを再表示する
-        return render(self.request, 'todo/todo_form.html', {'form': form})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['action'] = 'create'
+        return context
     
 class TodoUpdate(UpdateView):
     model = Todo
-    fields = "__all__"
-    success_url = reverse_lazy("list")
+    fields = ['title', 'description', 'deadline']
+    success_url = reverse_lazy('list')
+    template_name = 'todo/todo_form.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['action'] = 'update'
+        return context
     
 class TodoDelete(DeleteView):
     model = Todo
