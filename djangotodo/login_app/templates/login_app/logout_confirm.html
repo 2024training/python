@@ -1,0 +1,19 @@
+<!-- logout_confirm.html -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログアウト確認</title>
+    <!-- 必要なCSSやJavaScriptの読み込み -->
+</head>
+<body>
+    <div class="logout-confirm-modal">
+        <h2>ログアウトしますか？</h2>
+        <form action="{% url 'logout_confirm' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">ログアウト</button>
+        </form>
+    </div>
+</body>
+</html>

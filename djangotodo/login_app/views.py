@@ -41,10 +41,16 @@ def login_view(request):
 
     return render(request, 'login_app/login.html', param)
 
-def logout_view(request):
-    logout(request)
+# def logout_view(request):
+#     logout(request)
     
-    return render(request, 'login_app/logout.html')
+#     return render(request, 'login_app/logout.html')
+
+def logout_confirm(request):
+    if request.method == 'POST':
+        logout(request)
+        return redirect('login')  # ログインページにリダイレクト
+    return render(request, 'login_app/logout_confirm.html')
 
 def logout_view(request):
     logout(request)
