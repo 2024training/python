@@ -145,7 +145,8 @@ AUTHENTICATION_BACKENDS = (
 ACCOUNT_AUTHENTICATION_METHOD = 'email' # メールアドレス（とパスワードで）認証する
 ACCOUNT_USERNAME_REQUIRED = True # サインアップ（ユーザー登録）の時にユーザーネームを尋ねる
 ACCOUNT_EMAIL_REQUIRED = True # サインアップ（ユーザー登録）の時にメールアドレスを尋ねる
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory' # メール検証を必須とする
+ACCOUNT_EMAIL_VERIFICATION = 'none' # メール検証をオフ
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # メールをコンソール上に出力するらしい
 
 LOGIN_URL = '/account/login/' # ログインURLの設定
 LOGIN_REDIRECT_URL = '/index/' # ログイン後のリダイレクト先
