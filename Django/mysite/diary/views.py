@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView ,ListView ,DetailView ,UpdateView ,DeleteView
+from django.views.generic import TemplateView ,DetailView ,UpdateView ,DeleteView
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from .forms import DiaryForm
@@ -13,28 +13,59 @@ def IndexView(request):
     # ログインしたユーザーに特有のコンテンツを処理します
     return render(request, 'index.html')
 
-def diary_detail(request):
+# def ListViewtype1(request):
+#     # ログインしているユーザーのIDを取得
+#     user_id = request.user.id
+    
+#     # ログインしているユーザーのIDと同じIDを持つ Diary オブジェクトを取得
+#     diary = Diary.objects.filter(user_id=user_id)
+#     list = []
+    
+#     # Diary オブジェクトが存在するかどうかを確認
+#     if diary:
+#         if method="POST":
+#             for item in diary:
+#                 if request.form.value in item.text:
+#                     list.append(item)
+#                 if list:
+#                     return render(request, 'diary_list.html', list)
+#                 else:
+#                     return render(request, 'error.html')
+#         if method="GET":
+#         # Diary オブジェクトが存在する場合は、テンプレートに渡す
+#             context = {'diary': diary }
+#             return render(request, 'diary_list.html', context)
+#     else:
+#         # Diary オブジェクトが存在しない場合は、何らかの処理を行うか、エラーページを表示するなどの処理を行う
+#         return render(request, 'error.html')
+    
+def ListView(request):
     # ログインしているユーザーのIDを取得
     user_id = request.user.id
     
     # ログインしているユーザーのIDと同じIDを持つ Diary オブジェクトを取得
-    diary = Diary.objects.filter(user_id=user_id).first()
-    
-    # Diary オブジェクトが存在するかどうかを確認
-    if diary:
-        # Diary オブジェクトが存在する場合は、テンプレートに渡す
-        context = {'diary': diary}
-        return render(request, 'diary_detail.html', context)
+    diary_entries = Diary.objects.filter(user_id=user_id)
+
+    if request.method == "POST":
+        # POST メソッドの場合、検索テキストを取得し、該当する日記エントリーをフィルタリングする
+        search_text = request.POST.get('search_text', '')
+        matched_diary_entries = diary_entries.filter(text__icontains=search_text)
+        # フィルタリングされた結果をテンプレートに渡してレンダリング
+        if matched_diary_entries:
+            return render(request, 'diary_list.html', {'diary': matched_diary_entries, 'search_text': search_text})
+        else:
+            message = "該当なし"
+            return render(request, 'diary_list.html', {'message': message })
     else:
-        # Diary オブジェクトが存在しない場合は、何らかの処理を行うか、エラーページを表示するなどの処理を行う
-        return render(request, 'error.html')
+        # GET メソッドの場合、すべての日記エントリーを表示
+        if diary_entries.exists():
+            return render(request, 'diary_list.html', {'diary': diary_entries})
+        else:
+            # 日記エントリーが存在しない場合、エラーページへ
+            return render(request, 'error.html')
+
 
 class DiaryCreateView(CreateView):
-    template_name = 'diary_create.html'
-    form_class = DiaryForm
-    success_url = reverse_lazy('diary:diary_create_complete')
-
-class DiaryCreateView2(CreateView):
     template_name = 'diary_create.html'
     form_class = DiaryForm
     success_url = reverse_lazy('diary:diary_create_complete')
@@ -53,10 +84,6 @@ class DiaryCreateView2(CreateView):
 
 class DiaryCreateCompleteView(TemplateView):
     template_name = 'diary_create_complete.html'
-
-class DiaryListView(ListView):
-    template_name = 'diary_list.html'
-    model = Diary
 
 class DiaryDetailView(DetailView):
     template_name = 'diary_detail.html'

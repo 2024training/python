@@ -1,10 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
-<p>
-    干渉できない感じ？
-    
-    <a href="{% url 'diary:diary_detail' diary.pk %}">{{ diary }}</a>
-</p>
+<div>{{ request.user.username }}さんの投稿</div>
+<div>{{ message }}</div>
+<ul>
+{% for item in diary %}
+<li>
+    <a href="{% url 'diary:diary_detail' pk=item.pk %}">{{ item.title }}</a>
+    <p>{{ item.text }}</p>
+</li>
 {% endfor %}
+</ul>
+<div><form method="post">{% csrf_token %}<input type="text" name="search_text" ><button type="submit">検索</button></form></div>
 <a href="{% url 'diary:index' %}">戻る</a>
 {% endblock %}

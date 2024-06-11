@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 <div>{{ request.user.username }}さんようこそ</div>
-<div>{{ request.user.id }}さんようこそ</div>
-
     <h1>Diary App by django</h1>
     <h2><a href="{% url 'diary:diary_create' %}">新規投稿</a></h2>
     <h2><a href="{% url 'diary:diary_list' %}">投稿リスト</a></h2>
