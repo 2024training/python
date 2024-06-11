@@ -44,7 +44,3 @@ class CustomUser(AbstractUser):
 
 # 関連名を変更するためにデフォルトのユーザーモデルを上書きする
 AUTH_USER_MODEL = 'accounts.CustomUser'
-
-
-# この1文を消すことが果たしてできるのかね？
-# なんかそもそもこの更新が反映されないんですけど。
