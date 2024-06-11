@@ -4,13 +4,21 @@ from django.shortcuts import render
 from django.urls import reverse
 from myapp.forms import DirectorForm, MovieForm, LogForm
 from django.shortcuts import get_object_or_404, redirect
-
+from .models import Movie
+from django.views.generic import ListView
 
 
 class IndexView(generic.ListView):
     template_name = 'myapp/index.html'
     context_object_name = 'movie_list'
-    queryset = Movie.objects.all()
+    
+    def get_queryset(self):
+        query = self.request.GET.get('query')
+        if query:
+            movie_list = Movie.objects.filter(title__icontains=query)
+        else:
+            movie_list = Movie.objects.all()
+        return movie_list
 
 class MovieDetailView(generic.DetailView):
     model = Movie
@@ -58,6 +66,18 @@ class DeleteMovieView(generic.DeleteView):
     model = Movie
     def get_success_url(self):
         return reverse('myapp:index')
+
+
+class MovieList(ListView):
+    def get_queryset(self):
+        query = self.request.GET.get('query')
+
+        if query:
+            movie_list = Movie.objects.filter(
+                name__icontains=query)
+        else:
+            movie_list = Movie.objects.all()
+        return movie_list
     
 
 def writingthismovielog(request, movie_id):
@@ -72,3 +92,4 @@ def writingthismovielog(request, movie_id):
     else:
         return render(request, 'myapp/register.html', {'form': form})
       
+

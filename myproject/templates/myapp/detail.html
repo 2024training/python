@@ -1,25 +1,28 @@
-<h1>{{movie_list.title}}</h1>
-<h2>{{movie_list.director.name}}</h2>
-<h3>{{movie.watch_date}}視聴</h3>
+{% extends './base.html' %}
+{% block content %}
 
-<ul>
-{% for log in movie.log.all%}
-<li>{{log.text}}</li>
-{% endfor %}
-</ul>
+
+<h3>{{movie.title}}</h3>
+<h5>{{movie.director}}</h5>
+<h5>{{movie.watch_date}}視聴</h5>
+
+
 
 {% for log in movie.log.all %}
-    <li>
-        <button onclick="location.href='{% url 'myapp:updatelog' log.id %}'">編集</button>
-        <button onclick="location.href='{% url 'myapp:deletelog' log.id %}'">削除</button>
-        {{ log.text }}
-    </li>
+    <table>
+        <td>{{ log.text }}</td>
+        <td>
+            <button onclick="location.href='{% url 'myapp:updatelog' log.id %}'">編集</button>
+            <button onclick="location.href='{% url 'myapp:deletelog' log.id %}'">削除</button>
+        </td>
+        <hr color="black" >
+    </table>
 
-
-
-<a href="{% url 'myapp:writingthismovielog' movie.id %}">Write log of this movie data</a><br>
-<a href="{% url 'myapp:deletemovie' movie.id %}">Delete this movie data</a><br>
 
 {% endfor %}
 
-<a href="{% url 'myapp:index' %}">To Index</a><br>
+<a href="{% url 'myapp:writingthismovielog' movie.id %}">この作品の感想を書く</a><br>
+<a href="{% url 'myapp:deletemovie' movie.id %}">この作品のデータを削除する</a><br>
+<a href="{% url 'myapp:index' %}">ホームに戻る</a><br>
+
+{% endblock %}
