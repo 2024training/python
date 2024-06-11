@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja">
+{% bootstrap_css %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}日記アプリ{% endblock %}</title>
+</head>
+<body>
+    <main>
+        {% block content %}
+        empty
+        {% endblock %}
+    </main>
+    <footer>
+        &copy; 日記アプリ
+    </footer>
+</body>
+</html>
