@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from .models import Todo
 
+
 class TodoList(LoginRequiredMixin, ListView):
     # このビューで作成するモデルの指定
     model = Todo
@@ -67,5 +68,4 @@ class TodoDelete(DeleteView):
     model = Todo
     context_object_name = "task"
     success_url = reverse_lazy("list")
-    
     

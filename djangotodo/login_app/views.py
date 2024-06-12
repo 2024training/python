@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from .forms import SignupForm, LoginForm
 from django.contrib.auth import login, logout
-
+from django.http import JsonResponse
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 def signup_view(request):
@@ -51,12 +52,18 @@ def login_view(request):
 
     return render(request, 'login_app/login.html', param)
 
+from django.urls import reverse
+from django.shortcuts import redirect
+
 def logout_confirm(request):
     if request.method == 'POST':
         logout(request)
-        # ログインページにリダイレクト
-        return redirect('login')
-    return render(request, 'login_app/logout_confirm.html')
+        # ログイン画面にリダイレクトするために、ログイン画面のURLを解決する
+        login_url = reverse('login')
+        return HttpResponseRedirect(login_url)
+    elif request.method == 'GET':
+        return render(request, 'login_app/logout_confirm.html')
+    return JsonResponse({'error': 'Only GET and POST methods are allowed'})
 
 def logout_view(request):
     logout(request)
