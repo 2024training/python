@@ -12,8 +12,16 @@ class TodoList(LoginRequiredMixin, ListView):
     context_object_name = "tasks"
     
     def get_queryset(self):
-        # ログインユーザーに関連するToDoのみを返す
-        return Todo.objects.filter(user=self.request.user)
+        # ソート順を取得、デフォルトは締め切り昇順
+        sort_order = self.request.GET.get('sort', 'deadline_asc')
+        if sort_order == 'deadline_desc':
+            return Todo.objects.filter(user=self.request.user).order_by('-deadline')
+        return Todo.objects.filter(user=self.request.user).order_by('deadline')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_sort'] = self.request.GET.get('sort', 'deadline_asc')
+        return context
     
 class TodoDetail(DetailView):
         model = Todo
