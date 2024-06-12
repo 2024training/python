@@ -1,15 +1,56 @@
 {% extends 'base.html' %}
 {% block content %}
-<div>{{ request.user.username }}さんの投稿</div>
-<div>{{ message }}</div>
+<style type="text/css">
+body {
+    background: rgba(206, 208, 209, 0.671);
+    font-size: 1.5em;
+    text-align: center;
+    }
+ul{
+    border: 10px solid;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;    
+    justify-content: center;
+    padding: 0 500px;
+}
+li{
+    list-style-type: none;
+    display: inline;
+    vertical-align: top;
+    border: 1px solid #000;
+    border-radius: 5%;
+    padding: 10px;
+    background-color: #FFF;
+    width: 200px;
+    margin: 15px auto;
+}
+.user{
+    display: inline-block;
+    border: 1px solid #000;
+    padding: 10px;
+    border-radius: 20%;
+}
+.search{
+    display: none;
+}
+.event:hover{
+    color: red;
+    cursor: pointer;
+    display:search
+}
+    </style>
+<div class="user">{{ request.user.username }}さんの投稿</div>
+{% if message %}<div>{{ message }}</div>{% endif %}
 <ul>
 {% for item in diary %}
 <li>
     <a href="{% url 'diary:diary_detail' pk=item.pk %}">{{ item.title }}</a>
-    <p>{{ item.text }}</p>
 </li>
 {% endfor %}
 </ul>
-<div><form method="post">{% csrf_token %}<input type="text" name="search_text" ><button type="submit">検索</button></form></div>
+<div class="event">検索</div>
+<div class="search"><form method="post">{% csrf_token %}<input type="text" name="search_text" ><button type="submit">検索</button></form></div>
 <a href="{% url 'diary:index' %}">戻る</a>
 {% endblock %}

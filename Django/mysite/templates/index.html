@@ -1,9 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
-<div>{{ request.user.username }}さんようこそ</div>
-    <h1>Diary App by django</h1>
-    <h2><a href="{% url 'diary:diary_create' %}">新規投稿</a></h2>
-    <h2><a href="{% url 'diary:diary_list' %}">投稿リスト</a></h2>
-    {% now "Y年m月d日" %}
-    <a href="{% url 'account_logout' %}">ログアウト</a>
+<style type="text/css">
+        .枠{
+            display: inline-block;
+            border: 10px solid;
+            border-radius:10%;
+            padding: 70px 20px;
+            margin: 10px;
+        }
+        .heading{
+            font-size: 50px;
+            font-family: Arial;
+        }
+        span{
+            display: inline-block;
+            margin: 5px;
+        }
+</style>
+<div class="枠">
+<span class="welcome">{% now "Y年m月d日" %}{{ request.user.username }}さんようこそ</span><br>
+    <p class="heading">Diary App by django</p><br>
+    <span><a class="btn btn-primary" href="{% url 'diary:diary_create' %}">新規投稿</a></span><br>
+    <span><a class="btn btn-primary" href="{% url 'diary:diary_list' %}">投稿リスト</a></span><br>
+    <span><a class="btn btn-primary" href="{% url 'account_logout' %}" role="button">ログアウト</a></span>
+</div>
 {% endblock %}
