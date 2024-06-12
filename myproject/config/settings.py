@@ -92,6 +92,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS':{"min_length":6},
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -99,6 +100,14 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+]
+
+PASSWORD_HASHERS = [
+    "django.contrib.auth.hashers.Argon2PasswordHasher",
+    "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
+    "django.contrib.auth.hashers.BCryptPasswordHasher",
+    "django.contrib.auth.hashers.PBKDF2PasswordHasher",
+    "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
 ]
 
 
@@ -126,3 +135,16 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+TEMPLATE_DIR = BASE_DIR / "Template"
+
+
+STATIC_DIR = BASE_DIR / "static"
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [STATIC_DIR,]
+
+
+MEDIA_DIR = BASE_DIR / "media"
+MEDIA_ROOT = MEDIA_DIR
+MEDIA_URL = "/media/"
+

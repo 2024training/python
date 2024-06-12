@@ -1,6 +1,7 @@
 from django.urls import path, include
 from . import views
 
+
 app_name = 'myapp'
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
@@ -11,6 +12,15 @@ urlpatterns = [
     path('update/log/<int:pk>/', views.UpdateLogView.as_view(), name='updatelog'), 
     path('delete/log/<int:pk>/', views.DeleteLogView.as_view(), name='deletelog'), 
     path('delete/movie/<int:pk>/', views.DeleteMovieView.as_view(), name='deletemovie'),
-    path('writingthismovielog/<int:movie_id>/', views.writingthismovielog, name='writingthismovielog')
+    path('writingthismovielog/<int:movie_id>/', views.writingthismovielog, name='writingthismovielog'),
+    path('register2/', views.AccountRegistration.as_view(), name='register2'),
+    path('login/',views.Login,name='Login'),
+    path('logout/',views.Logout,name="Logout"),
+    path('home/',views.home,name="home"),
 
 ]
+
+
+#urlパターン　上から
+#空のパス ('') にマッチする場合、views.IndexViewを呼び出し。name='index'は、このURLパターンに名前を付ける
+#<int:pk>は、整数値を受け取るパラメーターで、pkという名前でビューに渡される。この行は、映画の詳細ページを処理。
