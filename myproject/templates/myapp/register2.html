@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-{% load static %}
-<html lang="ja" dir="ltr">
-
-<head>
-<meta charset="utf-8">
-<title></title>
-<link rel="stylesheet" href='{% static "App_Folder_css/style.css" %}'/>
-</head>
+{% extends './base.html' %}
+{% block content %}
 
 <body>
 <h1>新規登録</h1>
@@ -33,3 +26,5 @@
 
 </body>
 </html>
+
+{% endblock %}

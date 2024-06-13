@@ -18,7 +18,7 @@
             <tr>
                 <td><a href ="{% url 'myapp:movie_detail' movie.id %}">{{ movie.title }}</a></td>
                 <td>{{movie.director.name}}</td>
-                <td>{{movie.watch_date}}</td>
+                <td>{{ log.watch_date}}</td>
             </tr>
         {% endfor %}
     {% endif %}

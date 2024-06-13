@@ -8,6 +8,7 @@ from .models import Movie
 from django.views.generic import ListView
 from django.views.generic import TemplateView 
 from .forms import AccountForm
+from django.http import HttpResponseBadRequest
 
 # ログイン・ログアウト処理に利用
 from django.contrib.auth import authenticate, login, logout
@@ -33,13 +34,25 @@ class IndexView(generic.ListView):
         else:
             movie_list = Movie.objects.all()
         return movie_list
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['username'] = [movie.user.username for movie in context['movie_list']]
+        return context
 
+    
 #DetailViewは、特定のオブジェクトの詳細ページを表示するための汎用ビュー
 
 class MovieDetailView(generic.DetailView):
     model = Movie
     template_name = 'myapp/detail.html'
     context_object_name = 'movie'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Movieモデルから関連するLogモデルを取得してcontextに追加
+        context['logs'] = self.object.log.all()
+        return context
 
 
 #新しい監督を登録するためのビュー
@@ -62,6 +75,12 @@ class RegisterMovieView(generic.CreateView):
     model = Movie
     form_class = MovieForm
     template_name = 'myapp/register.html'
+
+def form_valid(self, form):
+    form.instance.user = self.request.user
+    form.instance.movie = Movie.objects.get(pk=self.kwargs['movie_id'])
+    return super(WritingLogView, self).form_valid(form)
+    
     def get_success_url(self):
         return reverse('myapp:movie_detail', kwargs={'pk': self.object.pk }) 
 
@@ -71,8 +90,16 @@ class WritingLogView(generic.CreateView):
     model = Log
     form_class = LogForm
     template_name = 'myapp/register.html'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.movie = Movie.objects.get(pk=self.kwargs['pk'])
+        return super().form_valid(form)
+
     def get_success_url(self):
-        return reverse('myapp:movie_detail', kwargs={'pk': self.object.movie.pk }) 
+        return reverse('myapp:movie_detail', kwargs={'pk': form.instance.movie.pk })
+
+
 
 #編集後のアップデート
 #UpdateViewは、既存のオブジェクトを更新するための汎用ビュー
@@ -162,15 +189,16 @@ def writingthismovielog(request, movie_id):
         #フォームの入力が妥当であるかどうかをチェック（必須項目が入力されているかなど）
         if form.is_valid():
 
-            #フォームのデータをモデルオブジェクトに保存。データベースには保存せずに、一時的なオブジェクトとしてメモリに保持
-            #この場合、新しいログオブジェクトが作成され、変数 l に割り当てられる
-            l = form.save(commit=False)
-            #データベースに保存
-            l.save()
+            log = form.save(commit=False)
+            log.user = request.user
+            log.movie = obj
+            log.save()
 
             #ログが正常に作成された場合、そのログが関連付けられている映画の詳細ページにリダイレクト
      
-            return redirect('myapp:movie_detail', pk=l.movie.pk)
+            return redirect('myapp:movie_detail',  pk=obj.id)
+        else:
+            return HttpResponseBadRequest("Invalid form data")
     
     #POST メソッドでない場合、つまりフォームがまだ送信されていない場合は、ログフォームを含むページを表示
     else:
@@ -222,5 +250,9 @@ def home(request):
     return render(request, "myapp/home.html",context=params)
 
 
-  
+@login_required
+def home(request):
+    user_logs = Log.objects.filter(user=request.user)
+    return render(request, "myapp/home.html", {'user_logs': user_logs,'username': request.user.username})
+
 

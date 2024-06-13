@@ -9,6 +9,7 @@ urlpatterns = [
     path('register/director/', views.RegisterDirectorView.as_view(), name = 'registerdirector'),
     path('register/movie/', views.RegisterMovieView.as_view(), name= 'registermovie'),
     path('writing/log/', views.WritingLogView.as_view(), name = 'writinglog'),
+    path('writing/log/<int:pk>/', views.writingthismovielog, name='writing_log'),
     path('update/log/<int:pk>/', views.UpdateLogView.as_view(), name='updatelog'), 
     path('delete/log/<int:pk>/', views.DeleteLogView.as_view(), name='deletelog'), 
     path('delete/movie/<int:pk>/', views.DeleteMovieView.as_view(), name='deletemovie'),
@@ -17,6 +18,7 @@ urlpatterns = [
     path('login/',views.Login,name='Login'),
     path('logout/',views.Logout,name="Logout"),
     path('home/',views.home,name="home"),
+
 
 ]
 

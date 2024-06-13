@@ -4,13 +4,15 @@
 
 <h3>{{movie.title}}</h3>
 <h5>{{movie.director}}</h5>
-<h5>{{movie.watch_date}}視聴</h5>
 
 
 
 {% for log in movie.log.all %}
-    <table>
+    
+    <table  class='table table-striped table-hover'>
         <td>{{ log.text }}</td>
+        <td>投稿者：{{  log.user.username }}</td> 
+        <td>投稿日：{{ log.watch_date }}</td>
         <td>
             <button onclick="location.href='{% url 'myapp:updatelog' log.id %}'">編集</button>
             <button onclick="location.href='{% url 'myapp:deletelog' log.id %}'">削除</button>
@@ -21,8 +23,8 @@
 
 {% endfor %}
 
-<a href="{% url 'myapp:writingthismovielog' movie.id %}">この作品の感想を書く</a><br>
-<a href="{% url 'myapp:deletemovie' movie.id %}">この作品のデータを削除する</a><br>
+<a href="{% url 'myapp:writingthismovielog' pk=movie.pk %}">この作品の感想を書く</a><br>
+<a href="{% url 'myapp:deletemovie' pk=movie.pk %}">この作品のデータを削除する</a><br>
 <a href="{% url 'myapp:index' %}">ホームに戻る</a><br>
 
 {% endblock %}
