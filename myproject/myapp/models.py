@@ -19,14 +19,19 @@ class Director(models.Model):
 
 class Movie(models.Model):
     title = models.CharField(max_length=100, verbose_name="タイトル")
-    watch_date = models.DateField()
     director = models.ForeignKey(Director, on_delete=models.CASCADE, verbose_name="監督", related_name='movie')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="ユーザー", related_name='movies')
+    watch_date = models.DateField(verbose_name="視聴日時", null=True, blank=True)
+
     def __str__(self):
         return self.title
 
 class Log(models.Model):
     text = models.TextField()
+    watch_date = models.DateField(default=timezone.now)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, verbose_name="タイトル", related_name='log')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="ユーザー", related_name='logs')
+    
 
     def __str__(self):
         return self.text

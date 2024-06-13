@@ -13,6 +13,7 @@ from .forms import AccountForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 #generic.ListViewを継承。これはDjangoが提供する汎用のリストビュー
@@ -62,6 +63,11 @@ class RegisterMovieView(generic.CreateView):
     model = Movie
     form_class = MovieForm
     template_name = 'myapp/register.html'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user  # 現在のユーザーをuserフィールドに割り当てる
+        return super().form_valid(form)
+
     def get_success_url(self):
         return reverse('myapp:movie_detail', kwargs={'pk': self.object.pk }) 
 
@@ -71,6 +77,11 @@ class WritingLogView(generic.CreateView):
     model = Log
     form_class = LogForm
     template_name = 'myapp/register.html'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user  # ログインユーザーをログのユーザーに関連付ける
+        return super().form_valid(form)
+
     def get_success_url(self):
         return reverse('myapp:movie_detail', kwargs={'pk': self.object.movie.pk }) 
 
@@ -89,7 +100,7 @@ class UpdateLogView(generic.UpdateView):
 
 class DeleteLogView(generic.DeleteView):
     model = Log
-    template_name = 'myapp/delete.html'
+    template_name = 'myapp/movie_confirm_delete.html'
     def get_success_url(self):
         return reverse('myapp:movie_detail', kwargs={'pk': self.object.movie.pk})
 
@@ -145,13 +156,13 @@ class  AccountRegistration(TemplateView):
 
 
 #movie_id は、新しいログが作成される映画のプライマリキー
-def writingthismovielog(request, movie_id):
+def writingthismovielog(request, pk):
     
     #指定されたモデル（ここでは Movie）からオブジェクトを取得。movie_id に対応する映画オブジェクトが存在しない場合は、HTTP 404 エラーを返す。
-    obj = get_object_or_404(Movie, id=movie_id)
+    obj = get_object_or_404(Movie, id=pk)
     
     #({'movie':obj}):LogForm movie フィールドには、obj（映画オブジェクト）を初期値として渡す
-    form = LogForm({'movie':obj})
+    form = LogForm(initial={'movie':obj})
 
 
     if request.method == "POST":
@@ -165,12 +176,14 @@ def writingthismovielog(request, movie_id):
             #フォームのデータをモデルオブジェクトに保存。データベースには保存せずに、一時的なオブジェクトとしてメモリに保持
             #この場合、新しいログオブジェクトが作成され、変数 l に割り当てられる
             l = form.save(commit=False)
+            l.user = request.user  # ログインユーザーをログのユーザーに関連付ける
+            l.movie = obj  
             #データベースに保存
             l.save()
 
             #ログが正常に作成された場合、そのログが関連付けられている映画の詳細ページにリダイレクト
      
-            return redirect('myapp:movie_detail', pk=l.movie.pk)
+            return redirect('myapp:movie_detail', pk=obj.pk)
     
     #POST メソッドでない場合、つまりフォームがまだ送信されていない場合は、ログフォームを含むページを表示
     else:
@@ -215,12 +228,14 @@ def Logout(request):
     return HttpResponseRedirect(reverse('myapp:Login'))
 
 
-#ホーム
-@login_required
 def home(request):
-    params = {"UserID":request.user,}
-    return render(request, "myapp/home.html",context=params)
+    # ログ一覧を取得
+    user_logs = Log.objects.filter(user=request.user)
 
+    # テンプレートに渡すコンテキスト
+    context = {
+        'username': request.user.username,
+        'user_logs': user_logs,
+    }
 
-  
-
+    return render(request, "myapp/home.html", context=context)
