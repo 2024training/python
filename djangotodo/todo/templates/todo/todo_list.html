@@ -10,8 +10,8 @@
 <div class="mb-3">
     <label for="sortOrder" class="form-label">表示順</label>
     <select id="sortOrder" class="form-select" onchange="location = this.value;">
-        <option value="?sort=deadline_asc" {% if current_sort == 'deadline_asc' %}selected{% endif %}>締め切り昇順</option>
-        <option value="?sort=deadline_desc" {% if current_sort == 'deadline_desc' %}selected{% endif %}>締め切り降順</option>
+        <option value="?sort=deadline_asc" {% if current_sort == 'deadline_asc' %}selected{% endif %}>昇順</option>
+        <option value="?sort=deadline_desc" {% if current_sort == 'deadline_desc' %}selected{% endif %}>降順</option>
     </select>
 </div>
 <div class="shadow-sm p-3 mb-5 bg-white rounded">
@@ -40,7 +40,7 @@
 </table>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        const maxLength = 22; // 省略する文字数を設定
+        const maxLength = 20; // 省略する文字数を設定
         const ellipsisElements = document.querySelectorAll('.ellipsis');
 
         ellipsisElements.forEach(function(element) {
