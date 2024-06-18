@@ -148,3 +148,5 @@ MEDIA_DIR = BASE_DIR / "media"
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = "/media/"
 
+
+LOGIN_URL = '/login/'  # ログインページのURLを指定する

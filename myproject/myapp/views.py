@@ -246,7 +246,7 @@ def Logout(request):
     # ログイン画面遷移
     return HttpResponseRedirect(reverse('myapp:Login'))
 
-
+@login_required
 def home(request):
     # ログ一覧を取得
     user_logs = Log.objects.filter(user=request.user)
