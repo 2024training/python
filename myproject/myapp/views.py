@@ -8,6 +8,7 @@ from .models import Movie
 from django.views.generic import ListView
 from django.views.generic import TemplateView 
 from .forms import AccountForm
+from django.http import HttpResponseBadRequest
 
 # ログイン・ログアウト処理に利用
 from django.contrib.auth import authenticate, login, logout
@@ -42,6 +43,12 @@ class MovieDetailView(generic.DetailView):
     template_name = 'myapp/detail.html'
     context_object_name = 'movie'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Movieモデルから関連するLogモデルを取得してcontextに追加
+        context['logs'] = self.object.log.all()
+        return context
+
 
 #新しい監督を登録するためのビュー
 #CreateViewは、新しいオブジェクトを作成するための汎用ビュー
@@ -57,7 +64,7 @@ class RegisterDirectorView(generic.CreateView):
         return reverse('myapp:registermovie') 
 
 #新しい映画作品情報の作成
-#kwargs={'pk': self.object.pk }) 新しく作成された映画のプライマリキーをpkパラメーターとして渡している
+#kwargs(キーワード引数)={'pk': self.object.pk }) 新しく作成された映画のプライマリキーをpkパラメーターとして渡している
 
 class RegisterMovieView(generic.CreateView):
     model = Movie
@@ -68,6 +75,12 @@ class RegisterMovieView(generic.CreateView):
         form.instance.user = self.request.user  # 現在のユーザーをuserフィールドに割り当てる
         return super().form_valid(form)
 
+
+def form_valid(self, form):
+    form.instance.user = self.request.user
+    form.instance.movie = Movie.objects.get(pk=self.kwargs['movie_id'])
+    return super(WritingLogView, self).form_valid(form)
+    
     def get_success_url(self):
         return reverse('myapp:movie_detail', kwargs={'pk': self.object.pk }) 
 
@@ -77,6 +90,12 @@ class WritingLogView(generic.CreateView):
     model = Log
     form_class = LogForm
     template_name = 'myapp/register.html'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.movie = Movie.objects.get(pk=self.kwargs['pk'])
+        return super().form_valid(form)
+
 
     def form_valid(self, form):
         form.instance.user = self.request.user  # ログインユーザーをログのユーザーに関連付ける
