@@ -12,6 +12,10 @@
         <td>映画名: {{ log.movie.title }}</td>
         <td>{{ log.text }}</td>
         <td>投稿者：{{ log.user.username }}</td>
+        <td>
+            <button onclick="location.href='{% url 'myapp:updatelog' log.id %}'">編集</button>
+            <button onclick="location.href='{% url 'myapp:deletelog' log.id %}'">削除</button>
+        </td>
         </tr>
     {% endfor %}
     </tbody>
