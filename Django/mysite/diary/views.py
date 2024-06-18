@@ -13,6 +13,7 @@ def IndexView(request):
     # ログインしたユーザーに特有のコンテンツを処理します
     return render(request, 'index.html')
 
+# psuedopsuedocode
 # def ListViewtype1(request):
 #     # ログインしているユーザーのIDを取得
 #     user_id = request.user.id
@@ -55,7 +56,7 @@ def ListView(request):
             return render(request, 'diary_list.html', {'diary': matched_diary_entries, 'search_text': search_text})
         else:
             message = "該当なし"
-            return render(request, 'diary_list.html', {'message': message })
+            return render(request, 'diary_list.html', {'message': message,'search_text': search_text })
     else:
         # GET メソッドの場合、すべての日記エントリーを表示
         if diary_entries.exists():
@@ -63,23 +64,24 @@ def ListView(request):
         else:
             # 日記エントリーが存在しない場合、エラーページへ
             return render(request, 'error.html')
-
+        # {{ url('index:index', pk=user.pk) }}はhtml内で動的なURLを生成、対して下記はレンダリング時にURLを生成
 
 class DiaryCreateView(CreateView):
     template_name = 'diary_create.html'
+    # フォームの定義（インスタンス化）
     form_class = DiaryForm
     success_url = reverse_lazy('diary:diary_create_complete')
 
+    # オーバーライド
+    # フォームの値が有効かどうかをDiaryFormが判断。有効だったかどうかをviews.pyが判断し、以下の関数が実行される。
     def form_valid(self, form):
-        # フォームから日記オブジェクトを取得
+        # フォームに関連づけられたモデルと一致するかどうかを判断、フォームから日記モデルのインスタンスを作成。
         diary = form.save(commit=False)
-        
         # ログインユーザーのidを取得して、日記のユーザーIDに代入
         diary.user = self.request.user
-        
-        # 日記を保存
+        # 再度フォームに関連づけられたモデルと一致するかどうかを判断し、モデルのインスタンスの変更をモデルに保存。データーベースへと反映。
         diary.save()
-        
+        # return HttpResponseRedirect
         return super().form_valid(form)
 
 class DiaryCreateCompleteView(TemplateView):
@@ -94,7 +96,7 @@ class DiaryUpdateView(UpdateView):
     model = Diary
     fields = ('date', 'title', 'text',)
     success_url = reverse_lazy('diary:diary_list')
-
+    
     def form_valid(self, form):
         diary = form.save(commit=False)
         diary.updated_at = timezone.now()
@@ -104,7 +106,10 @@ class DiaryUpdateView(UpdateView):
 class DiaryDeleteView(DeleteView):
     template_name = 'diary_delete.html'
     model = Diary
+    # reverse_lazyしないとビューのロード時にURLの解決が行われることとなる。やってみたらリダイレクトが拒否された。
     success_url = reverse_lazy('diary:diary_list')
 
 class HomeView(TemplateView):
     template_name = 'home.html'
+
+# 情報伝達の種類は？

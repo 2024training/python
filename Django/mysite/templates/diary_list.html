@@ -7,7 +7,6 @@ body {
     text-align: center;
     }
 ul{
-    border: 10px solid;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -30,11 +29,10 @@ li{
     display: inline-block;
     border: 1px solid #000;
     padding: 10px;
-    border-radius: 20%;
+    border-radius: 5%;
+    margin-top: 20px;
 }
-.search{
-    display: none;
-}
+
 .event:hover{
     color: red;
     cursor: pointer;
@@ -42,6 +40,7 @@ li{
 }
     </style>
 <div class="user">{{ request.user.username }}さんの投稿</div>
+{% if search_text %}<div>{{ search_text }}が含まれる日記</div>{% endif %}
 {% if message %}<div>{{ message }}</div>{% endif %}
 <ul>
 {% for item in diary %}

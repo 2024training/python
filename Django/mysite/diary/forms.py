@@ -7,4 +7,5 @@ class DiaryForm(forms.ModelForm):
         model = Diary
         fields = ('date', 'title', 'text',)
 
-    
+
+

@@ -49,5 +49,5 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.email
 
-# 関連名を変更するためにデフォルトのユーザーモデルを上書きする
+# 関連名を変更するためにデフォルトのユーザーモデルを上書きする。
 AUTH_USER_MODEL = 'accounts.CustomUser'

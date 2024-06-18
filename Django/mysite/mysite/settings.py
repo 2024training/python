@@ -151,3 +151,5 @@ LOGIN_URL = '/account/login/' # ログインURLの設定
 LOGIN_REDIRECT_URL = '/index/' # ログイン後のリダイレクト先
 ACCOUNT_LOGOUT_REDIRECT_URL = '/account/login/' #　ログアウト後のリダイレクト先
 
+# メールをコンソール上に出力
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
