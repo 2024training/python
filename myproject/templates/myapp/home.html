@@ -17,6 +17,10 @@
             <button onclick="location.href='{% url 'myapp:updatelog' log.id %}'">編集</button>
             <button onclick="location.href='{% url 'myapp:deletelog' log.id %}'">削除</button>
         </td>
+        <td>
+            <button onclick="location.href='{% url 'myapp:updatelog' log.id %}'">編集</button>
+            <button onclick="location.href='{% url 'myapp:deletelog' log.id %}'">削除</button>
+        </td>
         </tr>
     {% endfor %}
     </tbody>
