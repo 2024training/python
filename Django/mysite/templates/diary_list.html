@@ -39,6 +39,7 @@ li{
     display:search
 }
     </style>
+<div class="center">
 <div class="user">{{ request.user.username }}さんの投稿</div>
 {% if search_text %}<div>{{ search_text }}が含まれる日記</div>{% endif %}
 {% if message %}<div>{{ message }}</div>{% endif %}
@@ -53,3 +54,4 @@ li{
 <div class="search"><form method="post">{% csrf_token %}<input type="text" name="search_text" ><button type="submit">検索</button></form></div>
 <a href="{% url 'diary:index' %}">戻る</a>
 {% endblock %}
+</div>

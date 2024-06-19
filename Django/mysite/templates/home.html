@@ -1,15 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
 <style type="text/css">
-        body{
-                background-color: #000;
-                text-align: center   
+
+
+.kakoi{
+                position: absolute;
+                top: 10%;
+                left: 50%;
+                border: 1px solid black;
+                padding: 10px;
         }
 .spinner{
         position: fixed;
         top: calc(50%-50px);
         left: calc(50%-50px);
-
         width: 100px;
         height: 100px;
         border-top: 14px solid pink;
@@ -18,7 +22,7 @@
         border-left: 14px solid red;
         border-radius: 50%;
         animation-name: spin;
-        animation-duration: 0.15s;
+        animation-duration: 1s;
         animation-iteration-count: infinite;
         animation-timing-function: linear;
 }
@@ -34,8 +38,9 @@
 }
         
 </style>
+        <div class="kakoi">
         <h2 class="一般"><a href="{% url 'account_login' %}">一般</a></h2>
         <h2 class="管理者"><a href="http://127.0.0.1:8000/admin">管理者</a></h2>  
         <div class="spinner"></div>
+        </div>
         {% endblock %}
-
