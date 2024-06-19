@@ -1,7 +1,37 @@
 {% extends 'base.html' %}
 {% block content %}
+<style type="text/css">
+.枠{
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: inline-block;
+            border: 5px solid rgba(150, 150, 150, 0.3);
+            border-radius:10%;
+            padding: 20px 100px;
+            margin: 0;
+            text-align: center;
+            
+        }
+        .submit_button{
+        color:black;
+        text-decoration:none;
+        padding: 5px;
+        border-radius: 25px;
+        background-color:skyblue;
+        transition: all ease-in-out;
+    }
+    .submit_button:hover{
+        background-color:blue;
+        color:#FFF;
+        text-decoration:none;
+    }
+</style>
+<div class="枠">
 <p>日記の投稿が完了しました！</p>
-<a href="{% url 'diary:diary_list' %}">投稿一覧</a>
-<a href="{% url 'diary:index' %}">トップへ戻る</a>
+<a class="submit_button" href="{% url 'diary:diary_list' %}">投稿一覧</a>
+<a class="submit_button" href="{% url 'diary:index' %}">トップへ戻る</a>
+</div >
 
 {% endblock %}

@@ -1,12 +1,45 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>日記の詳細</h1>
-<p>日付：{{ diary.date }}</p>
-<p>タイトル：{{ diary.title }}</p>
-<p>本文：</p>
-<p>{{ diary.text }}</p>
-<a href="{% url 'diary:diary_update' diary.pk %}">編集</a>
-<a href="{% url 'diary:diary_delete' diary.pk %}">削除</a>
-<a href="{% url 'diary:index' %}">戻る</a>
+<style type="text/css">
+    .枠{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: inline-block;
+        border: 5px solid rgba(150, 150, 150, 0.3);
+        border-radius:10%;
+        padding: 20px 100px;
+        margin: 0;
+        text-align: center;
+    }
+    h2{
+        border-bottom:1px solid black;
+    }
+    .本文{
+        border:1px dotted black;
+    }
+    .submit_button{
+        color:black;
+        height:30px;
+        padding: 5px;
+        border-radius: 25px;
+        background-color:skyblue;
+        transition: all ease-in-out;
+    }
+    .submit_button:hover{
+        text-decoration:none;
+        background-color:blue;
+        color:#FFF;
+    }
+</style>
+<div class="枠">
+<p>{{ diary.date.month }}月{{ diary.date.day }}日</p>
+<h2>{{ diary.title }}</h2>
+<p class="本文">{{ diary.text }}</p>
+<a class="submit_button" href="{% url 'diary:diary_update' diary.pk %}">編集</a>
+<a class="submit_button" href="{% url 'diary:diary_delete' diary.pk %}">削除</a>
+<a class="submit_button" href="{% url 'diary:diary_list' %}">戻る</a>
+</div>
 {% endblock %}
 

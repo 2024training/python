@@ -55,7 +55,7 @@ def ListView(request):
         if matched_diary_entries:
             return render(request, 'diary_list.html', {'diary': matched_diary_entries, 'search_text': search_text})
         else:
-            message = "該当なし"
+            message = "は存在しませんでした。"
             return render(request, 'diary_list.html', {'message': message,'search_text': search_text })
     else:
         # GET メソッドの場合、すべての日記エントリーを表示

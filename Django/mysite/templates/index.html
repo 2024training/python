@@ -2,15 +2,21 @@
 {% block content %}
 <style type="text/css">
         .枠{
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             display: inline-block;
-            border: 10px solid;
+            border: 5px solid rgba(150, 150, 150, 0.3);
             border-radius:10%;
-            padding: 70px 20px;
-            margin: 10px;
+            padding: 20px 100px;
+            margin: 0;
+            text-align: center;
         }
         .heading{
             font-size: 50px;
             font-family: Arial;
+            border-bottom:2px solid rgba(150, 150, 150, 0.3);
         }
         span{
             display: inline-block;
@@ -18,10 +24,11 @@
         }
 </style>
 <div class="枠">
-<span class="welcome">{% now "Y年m月d日" %}{{ request.user.username }}さんようこそ</span><br>
-    <p class="heading">Diary App by django</p><br>
-    <span><a class="btn btn-primary" href="{% url 'diary:diary_create' %}">新規投稿</a></span><br>
-    <span><a class="btn btn-primary" href="{% url 'diary:diary_list' %}">投稿リスト</a></span><br>
-    <span><a class="btn btn-primary" href="{% url 'account_logout' %}" role="button">ログアウト</a></span>
+<span class="welcome">{% now "Y年m月d日" %}</span>
+<span class="welcome">{{ request.user.username }}さん</span>
+    <p class="heading">Diary</p>
+    <p><a class="btn btn-primary" href="{% url 'diary:diary_create' %}">新規投稿</a></p>
+    <p><a class="btn btn-primary" href="{% url 'diary:diary_list' %}">投稿リスト</a></p>
+    <p><a class="btn btn-primary" href="{% url 'account_logout' %}" role="button">ログアウト</a></p>
 </div>
 {% endblock %}

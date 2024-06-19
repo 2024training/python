@@ -1,23 +1,53 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
 {% block content %}
-<div class="center">
+<style type="text/css">
+    .枠{
+        position: fixed;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: inline-block;
+        border: 5px solid rgba(150, 150, 150, 0.3);
+        border-radius:10%;
+        padding: 20px 100px;
+        margin: 0;
+        text-align: center;
+    }
+    .form-group{
+        margin: 10px;
+    }
+    .submit_button{
+        width: 50px;
+        height:30px;
+        border-radius: 25px;
+        background-color:skyblue;
+        transition: all ease-in-out;
+        border-color:rgba(0,0,0,0);
+    }
+    .submit_button:hover{
+        background-color:blue;
+        color:#FFF;
+    }
+</style>
+
+<div class="枠">
     <h1>日記の作成</h1>
     <form method="post">
         {% csrf_token %}
         <div class="form-group">
             <label>{{ form.date.label }}</label>
-            {{ form.date | add_class:'form-control col-2' }}
+            {{ form.date }}
         </div>
         <div class="form-group">
             <label>{{ form.title.label }}</label>
-            {{ form.title | add_class:'form-control col-2' }}
+            {{ form.title }}
         </div>
         <div class="form-group">
             <label>{{ form.text.label }}</label>
-            {{ form.text | add_class:'form-control col-2' }}
+            {{ form.text }}
         </div>
-        <button type="submit" class="form-control col-1">投稿</button>
+        <button type="submit" class="submit_button">投稿</button>
     </form>
 </div>
 {% endblock %}

@@ -1,9 +1,25 @@
 {% extends 'base.html' %}
 {% block content %}
+<style type="text/css">
+.枠{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: inline-block;
+    border: 5px solid rgba(150, 150, 150, 0.3);
+    border-radius:10%;
+    padding: 20px 100px;
+    margin: 0;
+    text-align: center;
+}
+</style>
+<div class="枠">
 <h1>日記の編集</h1>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="保存">
+    <input type="submit" class="btn btn-primary" value="保存">
 </form>
+</div>
 {% endblock %}
