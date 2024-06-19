@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-4c$q=6ne_by+y^x7i*4ya&0fa#o3$w0z)c$**^98#pcgw7on6o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['example.com', 'www.example.com', '192.168.1.1']
+ALLOWED_HOSTS = ['movierecord.azurewebsites.net','www.movierecord.azurewebsites.net', '127.0.0.1']
 
 
 # Application definition
