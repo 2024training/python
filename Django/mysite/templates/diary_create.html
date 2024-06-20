@@ -2,18 +2,6 @@
 {% load widget_tweaks %}
 {% block content %}
 <style type="text/css">
-    .枠{
-        position: fixed;
-        top: 30%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        display: inline-block;
-        border: 5px solid rgba(150, 150, 150, 0.3);
-        border-radius:10%;
-        padding: 20px 100px;
-        margin: 0;
-        text-align: center;
-    }
     .form-group{
         margin: 10px;
     }
@@ -29,24 +17,28 @@
         background-color:blue;
         color:#FFF;
     }
+    textarea, .form_title{
+        width:400px;
+        display:block;
+        margin-bottom: 10px;
+    }
+    .form_date{
+            width:90px;
+    }
+    label{
+        margin:0;
+    }
 </style>
-
-<div class="枠">
-    <h1>日記の作成</h1>
+<div class="waku">
+    <h1>新規投稿</h1>
     <form method="post">
         {% csrf_token %}
-        <div class="form-group">
-            <label>{{ form.date.label }}</label>
-            {{ form.date }}
-        </div>
-        <div class="form-group">
             <label>{{ form.title.label }}</label>
-            {{ form.title }}
-        </div>
-        <div class="form-group">
+            {{ form.title | add_class:"form_title" }}
             <label>{{ form.text.label }}</label>
-            {{ form.text }}
-        </div>
+            <textarea name="{{ form.text.name }}" rows="5"></textarea>
+            <label>{{ form.date.label }}</label>
+            {{ form.date | add_class:"form_date" }}
         <button type="submit" class="submit_button">投稿</button>
     </form>
 </div>

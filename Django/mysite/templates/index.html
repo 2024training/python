@@ -1,34 +1,26 @@
 {% extends 'base.html' %}
 {% block content %}
 <style type="text/css">
-        .枠{
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: inline-block;
-            border: 5px solid rgba(150, 150, 150, 0.3);
-            border-radius:10%;
-            padding: 20px 100px;
-            margin: 0;
-            text-align: center;
-        }
-        .heading{
-            font-size: 50px;
-            font-family: Arial;
-            border-bottom:2px solid rgba(150, 150, 150, 0.3);
-        }
         span{
+            position:relative;
             display: inline-block;
             margin: 5px;
         }
+    p{
+        float:left;
+    }
+    .heading{
+            font-size: 50px;
+            font-family: Arial;
+            border-bottom:3px solid rgba(150, 150, 150, 0.3);
+            padding-bottom: 10px;}
 </style>
-<div class="枠">
+<div class="waku">
 <span class="welcome">{% now "Y年m月d日" %}</span>
 <span class="welcome">{{ request.user.username }}さん</span>
-    <p class="heading">Diary</p>
-    <p><a class="btn btn-primary" href="{% url 'diary:diary_create' %}">新規投稿</a></p>
-    <p><a class="btn btn-primary" href="{% url 'diary:diary_list' %}">投稿リスト</a></p>
-    <p><a class="btn btn-primary" href="{% url 'account_logout' %}" role="button">ログアウト</a></p>
+    <h1 class="heading">Diary</h1>
+    <p><a class="submit_button1" href="{% url 'diary:diary_create' %}">新規投稿</a></p>
+    <p><a class="submit_button1" href="{% url 'diary:diary_list' %}">投稿リスト</a></p>
+    <p><a class="submit_button1" href="{% url 'account_logout' %}" role="button">ログアウト</a></p>
 </div>
 {% endblock %}

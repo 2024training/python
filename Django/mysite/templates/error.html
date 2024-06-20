@@ -1,36 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
-<style type="text/css">
-    .枠{
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        display: inline-block;
-        border: 5px solid rgba(150, 150, 150, 0.3);
-        border-radius:10%;
-        padding: 20px 100px;
-        margin: 0;
-        text-align: center;
-    }
-    .submit_button{
-        color:black;
-        height:30px;
-        padding: 5px;
-        border-radius: 25px;
-        background-color:skyblue;
-        transition: all ease-in-out;
-    }
-    .submit_button:hover{
-        text-decoration:none;
-        background-color:blue;
-        color:#FFF;
-    }
-
-</style>
-<div class="枠">
+<div class="waku">
 <p>どうやらまだあなたは日記を書いていないようです。</p>
-<a class="submit_button" href="{% url 'diary:diary_create' %}">こちらから投稿を！！</a>
-<a class="submit_button" href="{% url 'diary:index' %}">ホームへ</a>
+<a class="submit_button1" href="{% url 'diary:diary_create' %}">こちらから投稿を！！</a>
+<a class="submit_button1" href="{% url 'diary:index' %}">ホームへ</a>
 </div>
 {% endblock %}
