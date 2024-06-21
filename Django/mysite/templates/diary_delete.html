@@ -14,6 +14,16 @@
         height:50px;
         width:100px;
         line-height:25px;
+        float:left;
+    }
+    form{
+        display:inline;
+    }
+    .横{
+        position: absolute;
+        top:100%;
+        left:50%;
+        transform:translate(-50%);
     }
 </style>
 <div class="waku">
@@ -21,12 +31,11 @@
 <p>{{ diary.date.month }}月{{ diary.date.day }}日</p>
 <h2>{{ diary.title }}</h2>
 <p class="本文">{{ diary.text }}</p>
-<p class="横">
+<div class="横">
 <form method="post">
     {% csrf_token %}
     <input type="submit" class="submit_button1 notbutton" value="はい">
-</form></p>
-<p class="横">
+</form>
 <a class="submit_button1" href="{% url 'diary:diary_list' %}">いいえ</a></p>
 </div>
 {% endblock %}
