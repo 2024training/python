@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% block content %}
+<style type="text/css">
+    .waku {
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        transform: translate(-50%, -10%);
+        text-align: center;
+        width: 80%; /* コンテンツ幅を調整 */
+        max-height: 80vh; /* 画面の80%の高さに制限 */
+        overflow: hidden; /* waku全体からのオーバーフローを隠す */
+        border: 1px solid #ccc;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .waku-inner {
+        max-height: calc(100% - 80px); /* waku内部の最大高さを計算 */
+        overflow-y: auto; /* 縦方向のスクロールを許可 */
+        padding-bottom: 10px; /* リストの下部に余白を追加 */
+    }
+    ul {
+        padding: 0;
+        margin: 0 auto;
+        list-style-type: none; /* リストのマーカーを削除 */
+        text-align: center;
+        max-width: 600px; /* リストの最大幅を指定 */
+    }
+    li {
+        text-align: center;
+        list-style: none;
+        padding: 0;
+        margin-bottom: 10px; /* 各リストアイテムの下のマージンを設定 */
+    }
+    h3 {
+        border-bottom: 2px solid rgba(150, 150, 150, 0.3);
+        margin-bottom: 20px;
+    }
+    .submit_list {
+        display: inline-block;
+        color: black;
+        padding: 5px;
+        width: 400px;
+        height: 30px;
+        line-height: 30px;
+        border-radius: 25px;
+        background-color: greenyellow;
+        transition: all ease-in-out 0.1s;
+        overflow: hidden;
+        text-decoration: none;
+    }
+    .submit_list:hover {
+        background-color: green;
+        color: #fff;
+        text-decoration: none;
+    }
+    .検索 {
+        padding: 1px 3px;
+        border-color: rgba(0, 0, 0, 0);
+    }
+    .form-container {
+        margin-bottom: 20px; /* フォームとリストの間のスペースを設定 */
+    }
+    .submit_button1 {
+        display: inline-block;
+        color: black;
+        padding: 10px 20px;
+        border-radius: 25px;
+        background-color: skyblue;
+        transition: all ease-in-out 0.1s;
+        text-decoration: none;
+        margin: 10px;
+    }
+    .submit_button1:hover {
+        background-color: blue;
+        color: #fff;
+    }
+</style>
+<div class="waku">
+    <h3>{{ request.user.username }}さんの投稿</h3>
+    <form method="post" class="form-container">{% csrf_token %}
+        <input type="text" name="search_text" placeholder="日記本文を検索">
+        <button type="submit" class="submit_button1 検索">検索</button>
+    </form>
+    {% if search_text %}
+        <h5>「{{ search_text }}」が含まれる日記</h5>
+    {% endif %}
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+    <div class="waku-inner">
+        <ul>
+            {% for item in diary %}
+            <li>
+                <a class="submit_list" href="{% url 'diary:diary_detail' pk=item.pk %}">
+                    {{ item.date.month }}/{{ item.date.day }}：{{ item.title }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <a class="submit_button1" href="{% url 'diary:index' %}">戻る</a>
+</div>
+{% endblock %}

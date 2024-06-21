@@ -1,14 +1,50 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 {% block content %}
 <style type="text/css">
 .notbutton{padding:1px 3px;
-    border-color:rgba(0,0,0,0);}
+    border-color:rgba(0,0,0,0);
+    }
+    .form-group{
+        margin: 10px;
+    }
+    .submit_button{
+        width: 50px;
+        height:30px;
+        border-radius: 25px;
+        background-color:skyblue;
+        transition: all ease-in-out;
+        border-color:rgba(0,0,0,0);
+    }
+    .submit_button:hover{
+        background-color:blue;
+        color:#FFF;
+    }
+    textarea, .form_title{
+        width:400px;
+        display:block;
+        margin-bottom: 10px;
+    }
+    .form_date{
+            width:90px;
+    }
+    label{
+        margin:0;
+    }
+    .heading{
+        display:inline-block;
+    }
 </style>
 <div class="waku">
-<h1 class="heading" >編集</h1>
+<h2 class="heading" >編集</h2>
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+        <label>{{ form.title.label }}</label>
+        {{ form.title | add_class:"form_title" }}
+        <label>{{ form.text.label }}</label>
+        <textarea name="{{ form.text.name }}" rows="5">{{ form.text.value }}</textarea>
+        <label>{{ form.date.label }}</label>
+        {{ form.date | add_class:"form_date" }}
     <input type="submit" class="submit_button1 notbutton" value="保存">
 </form>
 </div>

@@ -8,6 +8,13 @@
         transform: translate(-50%);
         text-align: center;
     }
+    .スクロール{
+        border:2px solid rgba(150, 150, 150, 0.1);
+        padding: 5px 15px;
+        overflow-y:auto;
+        height:300px;
+        border-radius:10%;
+    }
     ul {
         padding: 0;
         margin: 0;
@@ -56,12 +63,14 @@
     <button type="submit" class="submit_button1 検索">検索</button></form>
 {% if search_text %}<h5>「{{ search_text }}」が含まれる日記</h5>{% endif %}
 {% if message %}<div>{{ message }}</div>{% endif %}</div>
+<div class="スクロール">
 <ul>
 {% for item in diary %}
 <li>
-    <a class="submit_list" href="{% url 'diary:diary_detail' pk=item.pk %}">{{ item.title }}</a>
+    <a class="submit_list" href="{% url 'diary:diary_detail' pk=item.pk %}">{{ item.date.month }}/{{ item.date.day }}：{{ item.title }}</a>
 </li>
 {% endfor %}
 </ul>
+</div>
 <a class="submit_button1" href="{% url 'diary:index' %}">戻る</a></div>
 {% endblock %}

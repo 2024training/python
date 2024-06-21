@@ -28,9 +28,12 @@
     label{
         margin:0;
     }
+    .heading{
+        display:inline-block;
+    }
 </style>
 <div class="waku">
-    <h1>新規投稿</h1>
+    <h1 class="heading" >新規投稿</h1>
     <form method="post">
         {% csrf_token %}
             <label>{{ form.title.label }}</label>
