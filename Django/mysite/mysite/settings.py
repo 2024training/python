@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-iwzy0(6x3ot1(v+km3f^w-k=nhw2%x=+497k#(@+ww7x3!tuk#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['diary-by-django.azurewebsites.net']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.path.join('/home', 'db.sqlite3'),
     }
 }
 
@@ -153,3 +153,4 @@ ACCOUNT_LOGOUT_REDIRECT_URL = '/account/login/' #　ログアウト後のリダ�
 
 # メールをコンソール上に出力
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+CSRF_TRUSTED_ORIGINS = ['https://diary3.azurewebsites.net/']
