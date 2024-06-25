@@ -153,4 +153,4 @@ ACCOUNT_LOGOUT_REDIRECT_URL = '/account/login/' #　ログアウト後のリダ�
 
 # メールをコンソール上に出力
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-CSRF_TRUSTED_ORIGINS = ['https://diary3.azurewebsites.net/']
+CSRF_TRUSTED_ORIGINS = ['https://diary000.azurewebsites.net/']
